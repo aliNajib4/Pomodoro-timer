@@ -11,6 +11,13 @@ export default {
           200: "#A1C398",
         },
       },
+      container: {
+        center: true,
+        padding: "1rem",
+      },
+      fontFamily: {
+        cairo: ["Cairo", "sans-serif"],
+      },
     },
   },
   plugins: [],
