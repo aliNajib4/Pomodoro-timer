@@ -1,10 +1,11 @@
-import { Header } from "./components";
+import { Header, Home } from "./components";
 
 const App = () => {
   return (
     <div className="h-screen w-screen bg-primary font-cairo">
-      <div className="container h-full">
+      <div className="container flex h-full flex-col">
         <Header />
+        <Home />
       </div>
     </div>
   );

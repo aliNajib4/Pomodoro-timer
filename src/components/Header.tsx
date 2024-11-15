@@ -6,7 +6,7 @@ const Header = () => {
       <div className="inline h-8 w-8">
         <img src={logo} alt="logo" />
       </div>
-      <h1 className="ml-2 text-2xl font-black uppercase text-senondary">
+      <h1 className="ml-2 text-2xl font-black uppercase text-secondary">
         timer
       </h1>
     </header>
