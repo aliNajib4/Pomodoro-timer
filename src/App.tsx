@@ -2,7 +2,7 @@ import { Header } from "./components";
 
 const App = () => {
   return (
-    <div className="bg-primary h-screen w-screen font-cairo">
+    <div className="h-screen w-screen bg-primary font-cairo">
       <div className="container h-full">
         <Header />
       </div>
