@@ -14,6 +14,7 @@ const Timer = () => {
 
   const changeTab = (idx: number) => {
     setCurrentTab(idx);
+    setIsRunning(false);
   };
 
   const handleTimer = () => {
