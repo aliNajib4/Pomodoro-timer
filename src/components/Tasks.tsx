@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { TaskItem, EditTask } from "./";
 import TTaskItem from "../types/taskItem";
 import TNewTask from "../types/newTask";
@@ -53,6 +53,9 @@ const Tasks = () => {
   const [tasks, setTasks] = useState<{ [key: number]: TTaskItem }>(DATA);
   const [showEditTask, setShowEdit] = useState(false);
   const [editItem, setEditItem] = useState<null | number>(null);
+  const [showMemu, setShowMenu] = useState(false);
+  const menuRef = useRef<null | HTMLUListElement>(null);
+  const dotsRef = useRef<null | HTMLButtonElement>(null);
 
   const isActive = (id: number) => activeTask === id;
 
@@ -119,10 +122,57 @@ const Tasks = () => {
     [editItem],
   );
 
+  const toggleShowMenu = () => {
+    setShowMenu((prev) => !prev);
+  };
+
+  const clearAll = () => {
+    setTasks({});
+    setShowMenu(false);
+  };
+
+  const clearCompleted = () => {
+    setTasks((prev) => {
+      const copyTasks = { ...prev };
+      Object.values(copyTasks).forEach((task) => {
+        if (task.completed) {
+          delete copyTasks[task.id];
+        }
+      });
+      return copyTasks;
+    });
+    setShowMenu(false);
+  };
+
+  const clearPomodoros = () => {
+    setTasks((prev) => {
+      const copyTasks = JSON.parse(JSON.stringify(prev));
+      Object.keys(copyTasks).forEach((key) => {
+        copyTasks[+key].pomodoros = 0;
+      });
+      return copyTasks;
+    });
+    setShowMenu(false);
+  };
+
+  useEffect(() => {
+    const closeOpenMenus = (e: MouseEvent) => {
+      if (showMemu && !menuRef.current?.contains(e.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeOpenMenus);
+
+    return () => {
+      document.removeEventListener("mousedown", closeOpenMenus);
+    };
+  }, [showMemu]);
+
   console.log("r: " + activeTask);
   return (
     <div className="h-full w-full rounded-xl bg-secondary">
-      <div className="flex items-center justify-between border-b px-4 py-3">
+      <div className="relative flex items-center justify-between border-b px-4 py-3">
         <h3 className="text-xl font-bold">Tasks</h3>
         <div className="flex items-center gap-6">
           <button
@@ -131,10 +181,32 @@ const Tasks = () => {
           >
             {!showEditTask ? "add" : "cancel"}
           </button>
-          <div>
+          <button onClick={toggleShowMenu} className="px-2" ref={dotsRef}>
             <Dots />
-          </div>
+          </button>
         </div>
+        {showMemu && (
+          <ul
+            ref={menuRef}
+            className="absolute right-8 top-6 z-10 divide-y-2 overflow-hidden rounded-md border bg-white shadow-lg"
+          >
+            <li className="p-2 hover:bg-primary-100 hover:text-white">
+              <button onClick={clearAll} className="w-full">
+                clear all
+              </button>
+            </li>
+            <li className="p-2 hover:bg-primary-100 hover:text-white">
+              <button onClick={clearCompleted} className="w-full">
+                clear completed
+              </button>
+            </li>
+            <li className="p-2 hover:bg-primary-100 hover:text-white">
+              <button onClick={clearPomodoros} className="w-full">
+                clear pomodoros
+              </button>
+            </li>
+          </ul>
+        )}
       </div>
       <ul className="flex flex-col gap-3 px-5 py-3">
         {showEditTask && (
