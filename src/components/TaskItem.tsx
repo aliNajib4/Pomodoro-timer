@@ -20,7 +20,6 @@ const TaskItem = memo(
     isActive,
   }: TProps) => {
     const { content, completed, target, pomodoros, id } = data;
-    console.log("render: ", id);
     return (
       <div
         className={`relative flex items-center justify-between rounded-lg p-2 text-2xl shadow-md ${isActive ? "bg-primary-100 text-secondary" : "bg-secondary"}`}

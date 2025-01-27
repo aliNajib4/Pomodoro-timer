@@ -48,7 +48,12 @@ const DATA = {
   },
 };
 
-const Tasks = () => {
+type TProps = {
+  setCurrentTask: React.Dispatch<React.SetStateAction<string>>;
+  currentPomodoro: number;
+};
+
+const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
   const [activeTask, setActiveTask] = useState<null | number>(null);
   const [tasks, setTasks] = useState<{ [key: number]: TTaskItem }>(DATA);
   const [showEditTask, setShowEdit] = useState(false);
@@ -59,9 +64,13 @@ const Tasks = () => {
 
   const isActive = (id: number) => activeTask === id;
 
-  const toggleActive = useCallback((id: number) => {
-    setActiveTask(id);
-  }, []);
+  const toggleActive = useCallback(
+    (id: number) => {
+      setActiveTask(id);
+      setCurrentTask(tasks[id].content);
+    },
+    [tasks, setCurrentTask],
+  );
 
   const taskDelete = useCallback((id: number) => {
     setTasks((prev) => {
@@ -122,8 +131,8 @@ const Tasks = () => {
     [editItem],
   );
 
-  const toggleShowMenu = () => {
-    setShowMenu((prev) => !prev);
+  const ShowMenu = () => {
+    setShowMenu(true);
   };
 
   const clearAll = () => {
@@ -155,6 +164,7 @@ const Tasks = () => {
     setShowMenu(false);
   };
 
+  //handle click outside menu
   useEffect(() => {
     const closeOpenMenus = (e: MouseEvent) => {
       if (showMemu && !menuRef.current?.contains(e.target as Node)) {
@@ -162,14 +172,26 @@ const Tasks = () => {
       }
     };
 
-    document.addEventListener("mousedown", closeOpenMenus);
+    document.addEventListener("mouseup", closeOpenMenus);
 
     return () => {
-      document.removeEventListener("mousedown", closeOpenMenus);
+      document.removeEventListener("mouseup", closeOpenMenus);
     };
   }, [showMemu]);
 
-  console.log("r: " + activeTask);
+  //update pomodoros
+  useEffect(() => {
+    if (activeTask === null) return;
+
+    setTasks((prev) => ({
+      ...prev,
+      [activeTask]: {
+        ...prev[activeTask],
+        pomodoros: prev[activeTask].pomodoros + 1,
+      },
+    }));
+  }, [currentPomodoro]);
+
   return (
     <div className="h-full w-full rounded-xl bg-secondary">
       <div className="relative flex items-center justify-between border-b px-4 py-3">
@@ -181,7 +203,7 @@ const Tasks = () => {
           >
             {!showEditTask ? "add" : "cancel"}
           </button>
-          <button onClick={toggleShowMenu} className="px-2" ref={dotsRef}>
+          <button onClick={ShowMenu} className="px-2" ref={dotsRef}>
             <Dots />
           </button>
         </div>
