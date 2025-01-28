@@ -16,7 +16,7 @@ const Dots = () => (
 const DATA = {
   1: {
     completed: true,
-    content: "this is task1",
+    content: "end design setting",
     pomodoros: 1,
     target: 2,
     id: 1,
@@ -24,7 +24,7 @@ const DATA = {
   },
   2: {
     completed: true,
-    content: "this is task2",
+    content: "setting relation to timer",
     pomodoros: 1,
     target: 7,
     id: 2,
@@ -32,7 +32,7 @@ const DATA = {
   },
   3: {
     completed: false,
-    content: "this is task3",
+    content: "responseve design",
     pomodoros: 1,
     target: 4,
     id: 3,
@@ -40,7 +40,7 @@ const DATA = {
   },
   4: {
     completed: false,
-    content: "this is task3",
+    content: "fourth task",
     pomodoros: 1,
     target: 5,
     id: 4,
@@ -87,7 +87,7 @@ const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
     }));
   }, []);
 
-  const showAdd = () => {
+  const toggleShowMenu = () => {
     setShowEdit((prev) => !prev);
   };
 
@@ -132,7 +132,7 @@ const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
   );
 
   const ShowMenu = () => {
-    setShowMenu(true);
+    setShowMenu((prev) => !prev);
   };
 
   const clearAll = () => {
@@ -167,7 +167,11 @@ const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
   //handle click outside menu
   useEffect(() => {
     const closeOpenMenus = (e: MouseEvent) => {
-      if (showMemu && !menuRef.current?.contains(e.target as Node)) {
+      if (
+        showMemu &&
+        !menuRef.current?.contains(e.target as Node) &&
+        !dotsRef.current?.contains(e.target as Node)
+      ) {
         setShowMenu(false);
       }
     };
@@ -198,7 +202,7 @@ const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
         <h3 className="text-xl font-bold">Tasks</h3>
         <div className="flex items-center gap-6">
           <button
-            onClick={showAdd}
+            onClick={toggleShowMenu}
             className="rounded-md border bg-white p-1 px-2 text-lg uppercase"
           >
             {!showEditTask ? "add" : "cancel"}
