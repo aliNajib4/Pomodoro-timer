@@ -1,15 +1,8 @@
 import { useRef, useState } from "react";
-
-type TOnSave = (settings: {
-  pomodoro: number;
-  shortBreak: number;
-  longBreak: number;
-  longBreakInterval: number;
-  removeSound: boolean;
-}) => void;
+import TSetting from "../types/setting";
 
 type TProps = {
-  onSave: TOnSave;
+  onSave: (settings: TSetting) => void;
 };
 
 const Settings = ({ onSave }: TProps) => {
@@ -55,6 +48,7 @@ const Settings = ({ onSave }: TProps) => {
     if (longBreakIntervalRef.current) longBreakIntervalRef.current.value = "4";
     if (removeSoundRef.current) removeSoundRef.current.checked = false;
     setErrors({});
+    handleSave();
   };
 
   return (
@@ -67,7 +61,7 @@ const Settings = ({ onSave }: TProps) => {
             type="number"
             defaultValue="25"
             ref={pomodoroRef}
-            className={`w-full rounded border-2 border-transparent p-2 text-black ${errors.pomodoro ? "border-2 border-red-500" : ""}`}
+            className={`w-full rounded border-2 p-2 text-black ${errors.pomodoro ? "border-2 border-red-500" : ""}`}
           />
         </div>
         <div>
@@ -76,7 +70,7 @@ const Settings = ({ onSave }: TProps) => {
             type="number"
             defaultValue="5"
             ref={shortBreakRef}
-            className={`w-full rounded border-2 border-transparent p-2 text-black ${errors.shortBreak ? "border-2 border-red-500" : ""}`}
+            className={`w-full rounded border-2 p-2 text-black ${errors.shortBreak ? "border-2 border-red-500" : ""}`}
             placeholder="Short Break (min)"
           />
         </div>
@@ -86,7 +80,7 @@ const Settings = ({ onSave }: TProps) => {
             type="number"
             defaultValue="15"
             ref={longBreakRef}
-            className={`w-full rounded border-2 border-transparent p-2 text-black ${errors.longBreak ? "border-2 border-red-500" : ""}`}
+            className={`w-full rounded border-2 p-2 text-black ${errors.longBreak ? "border-2 border-red-500" : ""}`}
             placeholder="Long Break (min)"
           />
         </div>
@@ -96,7 +90,7 @@ const Settings = ({ onSave }: TProps) => {
             type="number"
             defaultValue="4"
             ref={longBreakIntervalRef}
-            className={`w-full rounded border-2 border-transparent p-2 text-black ${errors.longBreakInterval ? "border-2 border-red-500" : ""}`}
+            className={`w-full rounded border-2 p-2 text-black ${errors.longBreakInterval ? "border-2 border-red-500" : ""}`}
             placeholder="Long Break Interval"
           />
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useCounterdown from "../hooks/useCounterdown";
+import TSetting from "../types/setting";
 
-const TIMES = [0.07, 5, 15];
 const TABS = ["task", "short break", "long break"];
 
 const fomatTime = (time: number) =>
@@ -11,16 +11,19 @@ type TProps = {
   currentTask: string;
   setCurrentPomodoro: React.Dispatch<React.SetStateAction<number>>;
   currentPomodoro: number;
+  setting: TSetting;
 };
 
 const Timer = ({
   currentTask,
   setCurrentPomodoro,
   currentPomodoro,
+  setting,
 }: TProps) => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const timeNow = useCounterdown(TIMES[currentTab], isRunning);
+  const times = [setting.pomodoro, setting.shortBreak, setting.longBreak];
+  const timeNow = useCounterdown(times[currentTab], isRunning);
 
   const changeTab = (idx: number) => {
     setCurrentTab(idx);
@@ -37,17 +40,18 @@ const Timer = ({
 
   const handleSkip = () => {
     setIsRunning(false);
-    if (currentPomodoro % 4 === 0) {
+    if (currentPomodoro % setting.longBreakInterval === 0) {
       changeTab(2);
+    } else {
+      changeTab(1);
     }
-    changeTab(1);
     setCurrentPomodoro((prev) => prev + 1);
   };
 
   useEffect(() => {
     if (currentTab === 0 && timeNow <= 0) {
       const nowPomodoro = currentPomodoro + 1;
-      if (nowPomodoro % 4 === 0) {
+      if (nowPomodoro % setting.longBreakInterval === 0) {
         changeTab(2);
       } else {
         changeTab(1);
@@ -55,7 +59,13 @@ const Timer = ({
       setCurrentPomodoro((prev) => prev + 1);
       setIsRunning(false);
     }
-  }, [timeNow, currentTab, setCurrentPomodoro, currentPomodoro]);
+  }, [
+    timeNow,
+    currentTab,
+    setCurrentPomodoro,
+    currentPomodoro,
+    setting.longBreakInterval,
+  ]);
 
   return (
     <div
