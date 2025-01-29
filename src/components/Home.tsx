@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tasks, Timer } from "./";
+import { Tasks, Timer, Setting } from "./";
 
 const Home = () => {
   const [currentTask, setCurrentTask] = useState("");
@@ -19,8 +19,9 @@ const Home = () => {
           currentPomodoro={currentPomodoro}
         />
       </div>
-      {/* demo */}
-      <div className="col-span-2 bg-red-300">3</div>
+      <div className="col-span-2">
+        <Setting />
+      </div>
     </main>
   );
 };
