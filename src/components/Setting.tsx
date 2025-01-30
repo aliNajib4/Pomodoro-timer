@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TSetting from "../types/setting";
 
 type TProps = {
@@ -29,16 +29,30 @@ const Settings = ({ onSave }: TProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const save = () => {
+    onSave({
+      pomodoro: Number(pomodoroRef.current?.value),
+      shortBreak: Number(shortBreakRef.current?.value),
+      longBreak: Number(longBreakRef.current?.value),
+      longBreakInterval: Number(longBreakIntervalRef.current?.value),
+      removeSound: removeSoundRef.current?.checked || false,
+    });
+  };
+
   const handleSave = () => {
     if (validate()) {
-      onSave({
+      save();
+    }
+    localStorage.setItem(
+      "setting",
+      JSON.stringify({
         pomodoro: Number(pomodoroRef.current?.value),
         shortBreak: Number(shortBreakRef.current?.value),
         longBreak: Number(longBreakRef.current?.value),
         longBreakInterval: Number(longBreakIntervalRef.current?.value),
         removeSound: removeSoundRef.current?.checked || false,
-      });
-    }
+      }),
+    );
   };
 
   const handleReset = () => {
@@ -48,8 +62,29 @@ const Settings = ({ onSave }: TProps) => {
     if (longBreakIntervalRef.current) longBreakIntervalRef.current.value = "4";
     if (removeSoundRef.current) removeSoundRef.current.checked = false;
     setErrors({});
-    handleSave();
+    save();
   };
+
+  useEffect(() => {
+    const setting = localStorage.getItem("setting");
+    if (setting) {
+      const {
+        pomodoro,
+        shortBreak,
+        longBreak,
+        longBreakInterval,
+        removeSound,
+      } = JSON.parse(setting);
+      if (pomodoroRef.current) pomodoroRef.current.value = pomodoro;
+      if (shortBreakRef.current) shortBreakRef.current.value = shortBreak;
+      if (longBreakRef.current) longBreakRef.current.value = longBreak;
+      if (longBreakIntervalRef.current)
+        longBreakIntervalRef.current.value = longBreakInterval;
+      if (removeSoundRef.current) removeSoundRef.current.checked = removeSound;
+    }
+    save();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex h-full w-full flex-col rounded-lg bg-neutral-900 p-6 text-white">
