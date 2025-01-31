@@ -57,6 +57,8 @@ const Timer = ({
     if (timeNow <= 0) {
       setIsComplete(true);
       setIsRunning(false);
+      new Notification("Pomodoro", { body: "Time's up!", icon: "/icon.svg" });
+      new Audio("/clock-alarm.mp3").play();
     } else {
       setIsComplete(false);
     }
