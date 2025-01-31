@@ -13,41 +13,6 @@ const Dots = () => (
   </div>
 );
 
-const DATA = {
-  1: {
-    completed: true,
-    content: "end design setting",
-    pomodoros: 1,
-    target: 2,
-    id: 1,
-    createAt: 1,
-  },
-  2: {
-    completed: true,
-    content: "setting relation to timer",
-    pomodoros: 1,
-    target: 7,
-    id: 2,
-    createAt: 2,
-  },
-  3: {
-    completed: false,
-    content: "responseve design",
-    pomodoros: 1,
-    target: 4,
-    id: 3,
-    createAt: 3,
-  },
-  4: {
-    completed: false,
-    content: "fourth task",
-    pomodoros: 1,
-    target: 5,
-    id: 4,
-    createAt: 4,
-  },
-};
-
 type TProps = {
   setCurrentTask: React.Dispatch<React.SetStateAction<string>>;
   currentPomodoro: number;
@@ -55,7 +20,9 @@ type TProps = {
 
 const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
   const [activeTask, setActiveTask] = useState<null | number>(null);
-  const [tasks, setTasks] = useState<{ [key: number]: TTaskItem }>(DATA);
+  const [tasks, setTasks] = useState<{ [key: number]: TTaskItem }>(
+    JSON.parse(localStorage.getItem("tasks") || "{}"),
+  );
   const [showEditTask, setShowEdit] = useState(false);
   const [editItem, setEditItem] = useState<null | number>(null);
   const [showMemu, setShowMenu] = useState(false);
@@ -194,7 +161,12 @@ const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
         pomodoros: prev[activeTask].pomodoros + 1,
       },
     }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPomodoro]);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <div className="h-full w-full rounded-xl bg-secondary">
