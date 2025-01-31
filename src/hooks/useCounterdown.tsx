@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-const useCounterdown = (time: number, isRunning: boolean) => {
+const useCounterdown = (
+  time: number,
+  isRunning: boolean,
+  setIsRunning: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const [timeNow, setTimeNow] = useState(time * 60);
 
   useEffect(() => {
@@ -18,6 +22,11 @@ const useCounterdown = (time: number, isRunning: boolean) => {
     }
     return () => clearInterval(interval);
   }, [time, isRunning]);
+  useEffect(() => {
+    if (timeNow <= 0) {
+      setIsRunning(false);
+    }
+  }, [timeNow, setIsRunning]);
   return timeNow / 60;
 };
 

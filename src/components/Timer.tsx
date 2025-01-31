@@ -22,8 +22,13 @@ const Timer = ({
 }: TProps) => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
   const times = [setting.pomodoro, setting.shortBreak, setting.longBreak];
-  const timeNow = useCounterdown(times[currentTab], isRunning);
+  const timeNow = useCounterdown(
+    Math.floor(times[currentTab] * 60) / 60,
+    isRunning,
+    setIsRunning,
+  );
 
   const changeTab = (idx: number) => {
     setCurrentTab(idx);
@@ -49,22 +54,37 @@ const Timer = ({
   };
 
   useEffect(() => {
-    if (currentTab === 0 && timeNow <= 0) {
-      const nowPomodoro = currentPomodoro + 1;
-      if (nowPomodoro % setting.longBreakInterval === 0) {
-        changeTab(2);
+    if (timeNow <= 0) {
+      setIsComplete(true);
+      setIsRunning(false);
+    } else {
+      setIsComplete(false);
+    }
+  }, [timeNow]);
+
+  useEffect(() => {
+    if (!isComplete) return;
+
+    if (currentTab === 0) {
+      const nextPomodoro = currentPomodoro + 1;
+      if (nextPomodoro % setting.longBreakInterval === 0) {
+        setCurrentTab(2);
       } else {
-        changeTab(1);
+        setCurrentTab(1);
       }
       setCurrentPomodoro((prev) => prev + 1);
-      setIsRunning(false);
+    } else {
+      setCurrentTab(0);
     }
+
+    setIsComplete(false);
   }, [
-    timeNow,
+    isComplete,
     currentTab,
-    setCurrentPomodoro,
     currentPomodoro,
     setting.longBreakInterval,
+    setCurrentTab,
+    setCurrentPomodoro,
   ]);
 
   return (
