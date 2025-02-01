@@ -17,7 +17,7 @@ const Home = () => {
   };
 
   return (
-    <main className="my-3 grid grow grid-cols-5 grid-rows-2 gap-2">
+    <main className="my-3 flex grow flex-col gap-2 md:grid md:grid-cols-5 md:grid-rows-2">
       <div className="col-span-2">
         <Timer
           currentTask={currentTask}

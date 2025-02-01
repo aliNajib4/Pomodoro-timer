@@ -43,8 +43,8 @@ const EditTask = memo(
     };
 
     return (
-      <div className="rounded-lg p-3 shadow-md">
-        <div className="mb-5 flex items-center gap-5 text-xl">
+      <div className="rounded-lg p-3 text-[18px] shadow-md">
+        <div className="mb-5 flex items-center gap-5 md:text-xl">
           <label htmlFor="contentInput">content: </label>
           <input
             type="text"
@@ -54,7 +54,7 @@ const EditTask = memo(
             defaultValue={data ? data.content : ""}
           />
         </div>
-        <div className="flex items-center justify-between text-xl capitalize">
+        <div className="flex items-center justify-between capitalize md:text-xl">
           <div className="">
             <label htmlFor="targetInput">target: </label>
             <input

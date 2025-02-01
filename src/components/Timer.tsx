@@ -104,7 +104,9 @@ const Timer = ({
           </li>
         ))}
       </ul>
-      <p className="text-center text-7xl font-black">{fomatTime(timeNow)}</p>
+      <p className="my-8 text-center text-7xl font-black">
+        {fomatTime(timeNow)}
+      </p>
       <div>
         <div className="flex w-full flex-col items-center justify-center px-4">
           <div>

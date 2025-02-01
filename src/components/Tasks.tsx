@@ -45,6 +45,7 @@ const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
       delete copyTasks[id];
       return copyTasks;
     });
+    setActiveTask(null);
   }, []);
 
   const toggleCompleted = useCallback((id: number) => {
@@ -175,7 +176,7 @@ const Tasks = ({ setCurrentTask, currentPomodoro }: TProps) => {
         <div className="flex items-center gap-6">
           <button
             onClick={toggleShowMenu}
-            className="rounded-md border bg-white p-1 px-2 text-lg uppercase"
+            className="rounded-md border bg-white p-1 px-2 text-sm uppercase md:text-lg"
           >
             {!showEditTask ? "add" : "cancel"}
           </button>

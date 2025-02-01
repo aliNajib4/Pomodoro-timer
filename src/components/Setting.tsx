@@ -91,7 +91,9 @@ const Settings = ({ onSave }: TProps) => {
       <h2 className="mb-4 text-xl font-bold">Timer Settings</h2>
       <div className="grid grid-cols-2 grid-rows-2 gap-4">
         <div>
-          <label className="mb-1 block">Pomodoro (min):</label>
+          <label className="mb-1 block text-xs md:text-[16px]">
+            Pomodoro (min):
+          </label>
           <input
             type="number"
             defaultValue="25"
@@ -100,7 +102,9 @@ const Settings = ({ onSave }: TProps) => {
           />
         </div>
         <div>
-          <label className="mb-1 block">Short Break (min):</label>
+          <label className="mb-1 block text-xs md:text-[16px]">
+            Short Break (min):
+          </label>
           <input
             type="number"
             defaultValue="5"
@@ -110,7 +114,9 @@ const Settings = ({ onSave }: TProps) => {
           />
         </div>
         <div>
-          <label className="mb-1 block">Long Break (min):</label>
+          <label className="mb-1 block text-xs md:text-[16px]">
+            Long Break (min):
+          </label>
           <input
             type="number"
             defaultValue="15"
@@ -120,7 +126,9 @@ const Settings = ({ onSave }: TProps) => {
           />
         </div>
         <div>
-          <label className="mb-1 block">Long Break Interval:</label>
+          <label className="mb-1 block text-xs md:text-[16px]">
+            Long Break Interval:
+          </label>
           <input
             type="number"
             defaultValue="4"
@@ -141,7 +149,7 @@ const Settings = ({ onSave }: TProps) => {
         Remove Sound
       </label>
 
-      <div className="mt-auto flex gap-2">
+      <div className="mt-4 flex gap-2 md:mt-auto">
         <button
           onClick={handleSave}
           className="w-full rounded bg-secondary p-3 font-bold text-neutral-900 transition hover:bg-slate-100"
@@ -150,7 +158,7 @@ const Settings = ({ onSave }: TProps) => {
         </button>
         <button
           onClick={handleReset}
-          className="w-full rounded bg-red-500 p-3 font-bold text-white transition hover:bg-red-600"
+          className="w-full rounded bg-red-500 p-1 font-bold text-white transition hover:bg-red-600"
         >
           Reset
         </button>
