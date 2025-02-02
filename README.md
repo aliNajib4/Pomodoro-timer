@@ -1,50 +1,24 @@
-# React + TypeScript + Vite
+# pomodoro app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Boost your productivity with the Pomodoro technique!** This app helps you stay focused by breaking work into intervals, typically 25 minutes long, followed by short breaks. Whether you're studying, coding, or working, our simple yet powerful timer keeps you on track.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Customizable Pomodoro, short break, and long break durations
+- Start, pause, and reset functionality
+- Sound and desktop notifications
+- Task management to track your progress
+- Productivity reports and statistics
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend:** React, TypeScript
+- **Styling:** Tailwind CSS
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 About Me
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+Hi, I'm a **React** developer passionate about building dynamic and scalable web applications. I specialize in **TypeScript** and **Tailwind CSS**, focusing on creating clean and efficient UI/UX experiences. This Pomodoro app is one of my projects aimed at improving productivity
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Authors
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+- [@alinajib4](https://www.github.com/alinajib4)
