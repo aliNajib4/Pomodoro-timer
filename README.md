@@ -1,4 +1,4 @@
-# pomodoro app
+# 🍅 pomodoro app
 
 **Boost your productivity with the Pomodoro technique!** This app helps you stay focused by breaking work into intervals, typically 25 minutes long, followed by short breaks. Whether you're studying, coding, or working, our simple yet powerful timer keeps you on track.
 
@@ -14,6 +14,10 @@
 
 - **Frontend:** React, TypeScript
 - **Styling:** Tailwind CSS
+
+## Demo
+
+- Check the live website [here](https://pomodoro-timer-ashen-eight.vercel.app)
 
 ## 🚀 About Me
 
